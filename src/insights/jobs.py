@@ -27,7 +27,7 @@ def read(path: str) -> List[Dict]:
     except FileNotFoundError:
         raise FileNotFoundError(f"Arquivo {path} não encontrado")
     else:
-        return print(dict_res[0])
+        return print(dict_res)
 
 
 def get_unique_job_types(path: str) -> List[str]:
