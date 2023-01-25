@@ -24,7 +24,7 @@ def get_max_salary(path: str) -> int:
 
         for offer in list:
             salary = offer["max_salary"]
-            if salary > top_salary and salary != '':
+            if salary > top_salary and salary != "":
                 top_salary = salary
     except NotImplementedError:
         raise NotImplementedError
@@ -53,7 +53,7 @@ def get_min_salary(path: str) -> int:
 
         for offer in list:
             salary = offer["min_salary"]
-            if salary < min_salary and salary != '':
+            if salary < min_salary and salary != "":
                 min_salary = salary
     except NotImplementedError:
         raise NotImplementedError
@@ -84,7 +84,13 @@ def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
         If `job["min_salary"]` is greather than `job["max_salary"]`
         If `salary` isn't a valid integer
     """
-    raise NotImplementedError
+    try:
+        min = int(job["min_salary"])
+        max = int(job["max_salary"])
+        if max > min:
+            return salary >= min and salary <= max
+    except ValueError:
+        ValueError()
 
 
 def filter_by_salary_range(
@@ -104,4 +110,10 @@ def filter_by_salary_range(
     list
         Jobs whose salary range contains `salary`
     """
-    raise NotImplementedError
+    try:
+        list = []
+        for offer in jobs:
+            if matches_salary_range(offer, salary):
+                list.append(offer)
+    except ValueError:
+        ValueError()
