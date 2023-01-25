@@ -52,7 +52,7 @@ def get_unique_job_types(path: str) -> List[str]:
             title = offer["job_title"]
             if title != '' and title not in job_type_list:
                 job_type_list.append(title)
-        return job_type_list[4]
+        return job_type_list
     except FileNotFoundError:
         raise FileNotFoundError(f"Arquivo {path} não encontrado")
 

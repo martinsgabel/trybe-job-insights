@@ -1,5 +1,7 @@
 from typing import List, Dict
 
+import jobs
+
 
 def get_unique_industries(path: str) -> List[str]:
     """Checks all different industries and returns a list of them
@@ -16,7 +18,16 @@ def get_unique_industries(path: str) -> List[str]:
     list
         List of unique industries
     """
-    raise NotImplementedError
+    try:
+        industries_list = []
+        list = jobs.read(path)
+        for offer in list:
+            title = offer["job_title"]
+            if title != '' and title not in industries_list:
+                industries_list.append(title)
+        return industries_list[4]
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Arquivo {path} não encontrado")
 
 
 def filter_by_industry(jobs: List[Dict], industry: str) -> List[Dict]:
