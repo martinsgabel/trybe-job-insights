@@ -49,8 +49,9 @@ def get_unique_job_types(path: str) -> List[str]:
         job_type_list = []
         list = read(path)
         for offer in list:
-            if offer["job_title"] not in job_type_list:
-                job_type_list.append(offer["job_title"])
+            title = offer["job_title"]
+            if title != '' and title not in job_type_list:
+                job_type_list.append(title)
         return job_type_list[4]
     except FileNotFoundError:
         raise FileNotFoundError(f"Arquivo {path} não encontrado")
