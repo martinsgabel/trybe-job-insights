@@ -50,7 +50,7 @@ def get_unique_job_types(path: str) -> List[str]:
         list = read(path)
         for offer in list:
             title = offer["job_title"]
-            if title != '' and title not in job_type_list:
+            if title != "" and title not in job_type_list:
                 job_type_list.append(title)
         return job_type_list
     except FileNotFoundError:
@@ -72,4 +72,12 @@ def filter_by_job_type(jobs: List[Dict], job_type: str) -> List[Dict]:
     list
         List of jobs with provided job_type
     """
-    raise NotImplementedError
+    list = []
+    try:
+        for offer in jobs:
+            offer_type = offer["job_type"]
+            if offer_type == job_type:
+                list.append(offer)
+        return list
+    except ValueError:
+        ValueError()
