@@ -22,10 +22,10 @@ def get_unique_industries(path: str) -> List[str]:
         industries_list = []
         list = jobs.read(path)
         for offer in list:
-            title = offer["job_title"]
-            if title != '' and title not in industries_list:
-                industries_list.append(title)
-        return industries_list[4]
+            industry = offer["industry"]
+            if industry != '' and industry not in industries_list:
+                industries_list.append(industry)
+        return industries_list[0]
     except FileNotFoundError:
         raise FileNotFoundError(f"Arquivo {path} não encontrado")
 
