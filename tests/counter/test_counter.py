@@ -1,5 +1,6 @@
-# from src.pre_built.counter import count_ocurrences
+from src.pre_built.counter import count_ocurrences
 
 
 def test_counter():
-    pass
+    res = count_ocurrences("mocks/jobs.csv", "End")
+    assert res == 3
