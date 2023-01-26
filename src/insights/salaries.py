@@ -1,6 +1,7 @@
 from typing import Union, List, Dict
 
 from src.insights.jobs import read
+
 # from jobs import read
 
 
@@ -22,17 +23,18 @@ def get_max_salary(path: str) -> int:
     try:
         top_salary = 0
         list = read(path)
+        sal_list = [
+            offer["max_salary"]
+            for offer in list
+            if offer["max_salary"].isdigit()
+        ]
 
-        for offer in list:
-            offer_sal = offer["max_salary"]
-            if offer_sal.isdigit():
-                salary = int(offer_sal)
-                if salary > top_salary:
-                    top_salary = salary
+        for offer in sal_list:
+            if offer > top_salary:
+                top_salary = offer
+                return top_salary
     except ValueError:
-        raise ValueError(f"{offer_sal} não é um valor válido")
-    else:
-        return top_salary
+        raise ValueError(f"{offer} não é um valor válido")
 
 
 def get_min_salary(path: str) -> int:
@@ -90,12 +92,18 @@ def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
         If `salary` isn't a valid integer
     """
     try:
-        min = int(job["min_salary"])
-        max = int(job["max_salary"])
-        if max > min:
-            return salary >= min and salary <= max
+        min = job["min_salary"]
+        max = job["max_salary"]
+        if min.isdigit() and max.isdigit() and salary.isdigit():
+            min = int(min)
+            max = int(max)
+            sal = int(salary)
+
+        if min > max:
+            raise ValueError
+        return sal >= min and sal <= max
     except ValueError:
-        ValueError()
+        raise ValueError()
 
 
 def filter_by_salary_range(
