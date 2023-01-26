@@ -1,6 +1,6 @@
 from typing import Union, List, Dict
 
-import jobs
+import src.insights.jobs as jobs
 
 
 def get_max_salary(path: str) -> int:

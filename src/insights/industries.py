@@ -1,6 +1,6 @@
 from typing import List, Dict
 
-import jobs
+import src.insights.jobs as jobs
 
 
 def get_unique_industries(path: str) -> List[str]:
