@@ -1,6 +1,7 @@
 from typing import Union, List, Dict
 
-import src.insights.jobs as jobs
+from src.insights.jobs import read
+# from jobs import read
 
 
 def get_max_salary(path: str) -> int:
@@ -20,16 +21,18 @@ def get_max_salary(path: str) -> int:
     """
     try:
         top_salary = 0
-        list = jobs.read(path)
+        list = read(path)
 
         for offer in list:
-            salary = offer["max_salary"]
-            if salary > top_salary and salary != "":
-                top_salary = salary
-    except NotImplementedError:
-        raise NotImplementedError
+            offer_sal = offer["max_salary"]
+            if offer_sal.isdigit():
+                salary = int(offer_sal)
+                if salary > top_salary:
+                    top_salary = salary
+    except ValueError:
+        raise ValueError(f"{offer_sal} não é um valor válido")
     else:
-        return round(top_salary)
+        return top_salary
 
 
 def get_min_salary(path: str) -> int:
@@ -49,14 +52,16 @@ def get_min_salary(path: str) -> int:
     """
     try:
         min_salary = get_max_salary(path)
-        list = jobs.read(path)
+        list = read(path)
 
         for offer in list:
-            salary = offer["min_salary"]
-            if salary < min_salary and salary != "":
-                min_salary = salary
-    except NotImplementedError:
-        raise NotImplementedError
+            offer_sal = offer["min_salary"]
+            if offer_sal.isdigit():
+                salary = int(offer_sal)
+                if salary < min_salary:
+                    min_salary = salary
+    except ValueError:
+        raise ValueError(f"{offer_sal} não é um valor válido")
     else:
         return round(min_salary)
 
