@@ -33,9 +33,10 @@ def get_max_salary(path: str) -> int:
             salary = int(offer)
             if salary > top_salary:
                 top_salary = salary
-                return top_salary
     except ValueError:
-        raise ValueError(f"{offer} não é um valor válido")
+        raise ValueError()
+    else:
+        return top_salary
 
 
 def get_min_salary(path: str) -> int:
