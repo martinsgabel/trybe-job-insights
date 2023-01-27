@@ -30,8 +30,9 @@ def get_max_salary(path: str) -> int:
         ]
 
         for offer in sal_list:
-            if offer > top_salary:
-                top_salary = offer
+            salary = int(offer)
+            if salary > top_salary:
+                top_salary = salary
                 return top_salary
     except ValueError:
         raise ValueError(f"{offer} não é um valor válido")
@@ -55,15 +56,18 @@ def get_min_salary(path: str) -> int:
     try:
         min_salary = get_max_salary(path)
         list = read(path)
+        sal_list = [
+            offer["min_salary"]
+            for offer in list
+            if offer["min_salary"].isdigit()
+        ]
 
-        for offer in list:
-            offer_sal = offer["min_salary"]
-            if offer_sal.isdigit():
-                salary = int(offer_sal)
-                if salary < min_salary:
-                    min_salary = salary
+        for offer in sal_list:
+            salary = int(offer)
+            if salary < min_salary:
+                min_salary = salary
     except ValueError:
-        raise ValueError(f"{offer_sal} não é um valor válido")
+        raise ValueError(f"{offer} não é um valor válido")
     else:
         return round(min_salary)
 
