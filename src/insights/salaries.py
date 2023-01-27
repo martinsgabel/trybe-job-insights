@@ -97,18 +97,16 @@ def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
         If `salary` isn't a valid integer
     """
     try:
-        min = job["min_salary"]
-        max = job["max_salary"]
-        if min.isdigit() and max.isdigit() and salary.isdigit():
-            min = int(min)
-            max = int(max)
-            sal = int(salary)
+        min = int(job["min_salary"])
+        max = int(job["max_salary"])
+        sal = int(salary)
 
         if min > max:
-            raise ValueError
-        return sal >= min and sal <= max
-    except ValueError:
+            raise ValueError()
+    except (ValueError, TypeError, KeyError):
         raise ValueError()
+    else:
+        return sal >= min and sal <= max
 
 
 def filter_by_salary_range(
@@ -128,10 +126,11 @@ def filter_by_salary_range(
     list
         Jobs whose salary range contains `salary`
     """
-    try:
-        list = []
-        for offer in jobs:
+    list = []
+    for offer in jobs:
+        try:
             if matches_salary_range(offer, salary):
                 list.append(offer)
-    except ValueError:
-        ValueError()
+        except ValueError:
+            ValueError()
+    return list
